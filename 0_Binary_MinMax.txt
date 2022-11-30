@@ -1,0 +1,289 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                    A] Write a program to perform binary search recursively
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define pb push_back
+
+bool binarySearchRec(vector<ll> v, ll eleToFind, ll beg, ll end)
+{
+    ll mid = (beg + end) / 2;
+
+    if (beg >= end)
+    {
+        if (v[mid] == eleToFind)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    // cout << mid << endl;
+
+    if (v[mid] == eleToFind)
+    {
+        return true;
+    }
+    else if (v[mid] < eleToFind)
+    {
+        // cout << "going right" << endl;
+        return binarySearchRec(v, eleToFind, mid + 1, end);
+    }
+    else if (v[mid] > eleToFind)
+    {
+        // cout << "going left" << endl;
+        return binarySearchRec(v, eleToFind, beg, mid - 1);
+    }
+    else
+    {
+        return false;
+    }
+
+    return false;
+}
+
+int main()
+{
+    ll n = 9;
+    vector<ll> v = {-6, -3, 0, 1, 2, 5, 7, 8, 9};
+
+    ll eleToFind = 5;
+
+    sort(v.begin(), v.end());
+
+    bool ans = binarySearchRec(v, eleToFind, 0, n - 1);
+
+    if (ans)
+    {
+        cout << "\nElement " << eleToFind << " found" << endl
+             << endl;
+    }
+    else
+    {
+        cout << "\nElement " << eleToFind << " not found" << endl
+             << endl;
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    A] Write a program to find Max & Min element of given array using min max algorithm based on divide and conquer strategies
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define pb push_back
+
+void helper(vector<ll> &v, ll *maxEl, ll *minEl, ll beg, ll end)
+{
+    if (beg == end)
+    {
+        if (*maxEl < v[beg])
+        {
+            *maxEl = v[beg];
+        }
+        if (*minEl > v[beg])
+        {
+            *minEl = v[beg];
+        }
+
+        return;
+    }
+
+    ll mid = (beg + end) / 2;
+
+    ll mx1 = INT_MIN;
+    ll mx2 = INT_MIN;
+
+    ll mn1 = INT_MAX;
+    ll mn2 = INT_MAX;
+
+    helper(v, &mx1, &mn1, beg, mid);
+    helper(v, &mx2, &mn2, mid + 1, end);
+
+    if (mx1 > mx2)
+    {
+        *maxEl = mx1;
+    }
+    else
+    {
+        *maxEl = mx2;
+    }
+
+    if (mn1 > mn2)
+    {
+        *minEl = mn2;
+    }
+    else
+    {
+        *minEl = mn1;
+    }
+
+    // cout<<beg<<" "<<end<<"  -  "<<*maxEl<<" "<<*minEl<<endl;
+}
+
+int main()
+{
+    cout << "Enter Size : ";
+    ll n;
+    cin >> n;
+
+    cout << endl;
+    cout << "Enter Array : ";
+
+    vector<ll> v;
+    for (int i = 0; i < n; i++)
+    {
+        ll x;
+        cin >> x;
+        v.pb(x);
+    }
+
+    // ll n = 8;
+    // vector<ll> v = {6, 3, 8, 4, 1, 2, 7, 5};
+
+    ll maxEl = INT_MIN;
+    ll minEl = INT_MAX;
+
+    helper(v, &maxEl, &minEl, 0, n - 1);
+
+    cout << endl;
+    cout << "maximum element : " << maxEl << endl;
+    cout << "minimun element : " << minEl << endl;
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    A] Write a program to find Max & Min element of given array using min max algorithm based on divide and conquer strategies
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define pb push_back
+
+void helper(vector<ll> &v, ll *maxEl, ll *minEl, ll beg, ll end)
+{
+    if (beg == end) // base case for one element
+    {
+        if (*maxEl < v[beg])
+        {
+            *maxEl = v[beg];
+        }
+        if (*minEl > v[beg])
+        {
+            *minEl = v[beg];
+        }
+
+        return;
+    }
+
+    if ((beg + 1) == end) // base case for two element
+    {
+        if (*maxEl < v[beg])
+        {
+            *maxEl = v[beg];
+        }
+        if (*maxEl < v[end])
+        {
+            *maxEl = v[end];
+        }
+
+        if (*minEl > v[beg])
+        {
+            *minEl = v[beg];
+        }
+        if (*minEl > v[end])
+        {
+            *minEl = v[end];
+        }
+
+        return;
+    }
+
+    ll mid = (beg + end) / 2;
+
+    ll mx1 = INT_MIN;
+    ll mx2 = INT_MIN;
+
+    ll mn1 = INT_MAX;
+    ll mn2 = INT_MAX;
+
+    helper(v, &mx1, &mn1, beg, mid);
+    helper(v, &mx2, &mn2, mid + 1, end);
+
+    if (mx1 > mx2)
+    {
+        *maxEl = mx1;
+    }
+    else
+    {
+        *maxEl = mx2;
+    }
+
+    if (mn1 > mn2)
+    {
+        *minEl = mn2;
+    }
+    else
+    {
+        *minEl = mn1;
+    }
+
+    // cout<<beg<<" "<<end<<"  -  "<<*maxEl<<" "<<*minEl<<endl;
+}
+
+int main()
+{
+    // cout << "Enter Size : ";
+    // ll n;
+    // cin >> n;
+
+    // cout << endl;
+    // cout << "Enter Array : ";
+
+    // vector<ll> v;
+    // for (int i = 0; i < n; i++)
+    // {
+    //     ll x;
+    //     cin >> x;
+    //     v.pb(x);
+    // }
+
+    ll n = 9;
+    vector<ll> v = {6, 3, 8, 4, -6, 1, 2, 7, 5};
+
+    ll maxEl = INT_MIN;
+    ll minEl = INT_MAX;
+
+    helper(v, &maxEl, &minEl, 0, n - 1);
+
+    cout << endl;
+    cout << "maximum element : " << maxEl << endl;
+    cout << "minimun element : " << minEl << endl;
+}

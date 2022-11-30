@@ -1,0 +1,78 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int partition(vector<int> &arr, int starting, int ending)
+{
+    int count = 0;
+
+    int i = starting + 1;
+    int piv = arr[starting];
+
+    for (int j = starting + 1; j <= ending; j++)
+    {
+        if (arr[j] < piv)
+        {
+            swap(arr[i], arr[j]);
+            i += 1;
+        }
+    }
+    swap(arr[starting], arr[i - 1]);
+
+    return i - 1;
+}
+
+void quick_sort(vector<int> &arr, int starting, int ending)
+{
+
+    if (starting < ending)
+    {
+        int piv_pos = partition(arr, starting, ending); // find pivot
+
+        quick_sort(arr, starting, piv_pos - 1); // sort left side
+        quick_sort(arr, piv_pos + 1, ending);   // sort right side
+    }
+}
+
+int main()
+{
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+
+    vector<int> arr = {-2, -4, -6, -8, -10};
+    int n = arr.size();
+
+    quick_sort(arr, 0, n - 1);
+
+    for (auto i : arr)
+    {
+        cout << i << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+
+/*
+//////////////////////////////////////////////////////////////////////////
+
+TEST CASE - 1
+
+arr = {19, 3, 8, 0, -5, 11}
+output = {-5 0 3 8 11 19}
+
+//////////////////////////////////////////////////////////////////////////
+
+TEST CASE - 2
+
+arr = {2, 4, 6, 8, 10}
+output = {2, 4, 6, 8, 10}
+
+//////////////////////////////////////////////////////////////////////////
+
+TEST CASE - 3
+
+arr = {-2, -4, -6, -8, -10}
+output = {-10 -8 -6 -4 -2 }
+
+//////////////////////////////////////////////////////////////////////////
+*/

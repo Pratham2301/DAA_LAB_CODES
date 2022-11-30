@@ -1,0 +1,85 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int n = 5;
+int x[6];
+
+int adj[5][5] =
+    {
+        {0, 1, 0, 1, 0},
+        {1, 0, 1, 1, 1},
+        {0, 1, 0, 0, 1},
+        {1, 1, 0, 0, 1},
+        {0, 1, 1, 1, 0}};
+
+void nextVertex(int c[], int k)
+{
+    while (1)
+    {
+        c[k] = (c[k] + 1) % (n);
+
+        if (c[k] == 0)
+        {
+            return;
+        }
+
+        int j;
+        if (adj[c[k]][c[k - 1]] != 0)
+        {
+            for (j = 0; j <= k - 1; j++)
+            {
+                if (c[j] == c[k])
+                    break;
+            }
+            if (j == k)
+            {
+                if (k < n - 1 || (k == n - 1 && adj[c[n - 1]][c[0]] != 0))
+                {
+                    return;
+                }
+            }
+        }
+    }
+}
+
+void hamiltonian(int c[], int k)
+{
+    if (k == 0)
+    {
+        c[k] = 0;
+        k++;
+    }
+
+    while (1)
+    {
+        nextVertex(c, k);
+
+        if (c[k] == 0)
+        {
+            return;
+        }
+        if (k == n - 1)
+        {
+            cout << "Cycle -> ";
+
+            for (int i = 0; i < n; i++)
+            {
+                cout << c[i];
+            }
+
+            cout << c[0] << endl;
+        }
+        else
+        {
+            hamiltonian(c, k + 1);
+        }
+    }
+}
+
+int main()
+{
+    int c[n] = {0, 0, 0, 0, 0};
+    int k = 0;
+    hamiltonian(c, k);
+    return 0;
+}
